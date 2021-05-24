@@ -7,7 +7,7 @@
 
 import Foundation
 
-
+// 디데이 정보를 갖는 모델
 struct DDay {
     var title: String
     var date: String
