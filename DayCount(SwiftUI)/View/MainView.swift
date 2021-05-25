@@ -7,15 +7,16 @@
 
 import SwiftUI
 
+// 어플 실행시 처음 보여지는 뷰
 struct MainView: View {
-    var mainViewModel: MainViewController
+    var mainViewModel: MainViewModel = MainViewModel()
     
     var body: some View {
         VStack(alignment: .center, spacing: 10){
             titleView()
                 .padding(.top, 10)
-            
-           Spacer()
+            ddaylistView()
+            Spacer()
         }
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -31,15 +32,26 @@ struct titleView: View {
 }
 
 struct ddaylistView: View{
+    @State private var showModal = false
+    
     var body: some View{
         VStack(alignment: .leading){
-            
+            Button(action: {
+                self.showModal.toggle()
+            }){
+                Image(systemName: "plus.circle")
+                    .resizable()
+                    .frame(width: 25, height: 25)
+            }.sheet(isPresented: $showModal){
+                AddItemView()
+            }
         }
     }
 }
 
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(mainViewModel: MainViewController())
+        MainView()
     }
 }
