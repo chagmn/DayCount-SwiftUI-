@@ -11,46 +11,47 @@ import SwiftUI
 struct AddItemView: View {
     @State private var title: String = ""
     @State private var date: String = ""
-    @State private var isSwitchOn: Bool = false
+    @State private var isToggleOn: Bool = false
     @State private var isClickedAddButton: Bool = false
     
-    var addItemViewModel: AddItemViewModel = AddItemViewModel()
+    @ObservableObject var addItemViewModel: AddItemViewModel = AddItemViewModel()
     
     var body: some View {
         VStack(alignment: .center){
             TextField("디데이 제목", text: $title)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.black)
-                .background(Color(#colorLiteral(red: 0.5966893435, green: 0.5931452513, blue: 0.5994156003, alpha: 1)))
-                .frame(width: 320)
-                .clipped()
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
+                .frame(width: 320, height: 40)
+                .background(Color(#colorLiteral(red: 0.8564875722, green: 0.8513966799, blue: 0.8604011536, alpha: 1)))
+                .cornerRadius(10)
+                .padding(.bottom, 30)
+                           
             HStack(spacing: 15){
-                TextField("년/월/일", text: $date)
+                TextField("연도 / 월 / 일", text: $date)
                     .multilineTextAlignment(.center)
                     .foregroundColor(.black)
-                    .background(Color(#colorLiteral(red: 0.5966893435, green: 0.5931452513, blue: 0.5994156003, alpha: 1)))
-                    .frame(width: 180)
-                    .clipped()
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 180, height: 40)
+                    .background(Color(#colorLiteral(red: 0.8564875722, green: 0.8513966799, blue: 0.8604011536, alpha: 1)))
+                    .cornerRadius(10)
                     
                 
-                Toggle("오늘 기준", isOn: $isSwitchOn)
-                    .frame(width: 130, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
-                // 오늘 기준 토글이 on이 되면
-                if isSwitchOn{
+                Toggle("오늘 기준", isOn: $isToggleOn)
+                    .frame(width: 130, height: 40)
+                
+                if isToggleOn{
                     
                 }
-            }.padding(.bottom, 30)
+                // 오늘 기준 토글이 on이 되면
+           
+            }.padding(.bottom, 50)
+            
             Button("추가하기"){
                 self.isClickedAddButton.toggle()
             }.frame(width: 160, height: 35, alignment: .center)
             .background(Color(UIColor.systemBlue))
             .foregroundColor(.white)
             .cornerRadius(10)
-           
-            //.position(x: UIScreen.main.bounds.width/2)
+        
         }
     }
 }
