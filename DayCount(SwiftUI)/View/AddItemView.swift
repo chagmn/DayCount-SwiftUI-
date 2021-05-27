@@ -35,17 +35,14 @@ struct AddItemView: View {
                 .background(Color(#colorLiteral(red: 0.8564875722, green: 0.8513966799, blue: 0.8604011536, alpha: 1)))
                 .cornerRadius(10)
                 .padding(.bottom, 30)
-                           
+            
             HStack(spacing: 50){
                 Toggle("오늘 기준", isOn: $isToggleOn)
                     .frame(width: 130, height: 40)
                 
-                
                 DatePicker(selection: $dateValue, in: ...Date(), displayedComponents: .date){
-                   // Text("\(dateField, formatter: dateFormatter)")
+                    // Text("\(dateField, formatter: dateFormatter)")
                 }.labelsHidden()
-              
-                
             }.padding(.bottom, 50)
             
             Button("추가하기", action: {
@@ -54,17 +51,12 @@ struct AddItemView: View {
             .background(Color(UIColor.systemBlue))
             .foregroundColor(.white)
             .cornerRadius(10)
-            
-            
         }
     }
     
     func addButtonDidTap(){
-        self.addItemViewModel.title = title
-        self.addItemViewModel.date = dateFormatter.string(from: dateValue)
-        self.addItemViewModel.calcDDay()
+        self.addItemViewModel.addDDay(title: title, date: dateFormatter.string(from: dateValue), isFromToday: isToggleOn)
         self.showAddItemView = false
-        
     }
 }
 
