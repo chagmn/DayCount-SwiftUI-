@@ -32,18 +32,18 @@ struct titleView: View {
 }
 
 struct ddaylistView: View{
-    @State private var showModal = false
+    @State private var showAddItemView = false
     
     var body: some View{
         VStack(alignment: .leading){
             Button(action: {
-                self.showModal.toggle()
+                self.showAddItemView.toggle()
             }){
                 Image(systemName: "plus.circle")
                     .resizable()
                     .frame(width: 25, height: 25)
-            }.sheet(isPresented: $showModal){
-                AddItemView()
+            }.sheet(isPresented: $showAddItemView){
+                AddItemView(showAddItemView: self.$showAddItemView)
             }
         }
     }
