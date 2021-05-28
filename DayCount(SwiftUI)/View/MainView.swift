@@ -9,7 +9,7 @@ import SwiftUI
 
 // 어플 실행시 처음 보여지는 뷰
 struct MainView: View {
-    var mainViewModel: MainViewModel = MainViewModel()
+    @ObservedObject var mainViewModel: MainViewModel = MainViewModel()
     
     var body: some View {
         VStack(alignment: .center, spacing: 10){
@@ -36,6 +36,7 @@ struct ddaylistView: View{
     
     var body: some View{
         VStack(alignment: .leading){
+            
             Button(action: {
                 self.showAddItemView.toggle()
             }){

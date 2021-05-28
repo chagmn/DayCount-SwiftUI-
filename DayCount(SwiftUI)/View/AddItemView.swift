@@ -18,7 +18,7 @@ struct AddItemView: View {
     
     @Binding var showAddItemView: Bool
     
-    @ObservedObject var addItemViewModel: AddItemViewModel = AddItemViewModel()
+    @ObservedObject var mainViewModel: MainViewModel = MainViewModel()
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -55,7 +55,7 @@ struct AddItemView: View {
     }
     
     func addButtonDidTap(){
-        self.addItemViewModel.addDDay(title: title, date: dateFormatter.string(from: dateValue), isFromToday: isToggleOn)
+        self.mainViewModel.addDDay(title: title, date: dateFormatter.string(from: dateValue), isFromToday: isToggleOn)
         self.showAddItemView = false
     }
 }

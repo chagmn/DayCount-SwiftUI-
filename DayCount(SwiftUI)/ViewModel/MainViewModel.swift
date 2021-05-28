@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class AddItemViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
     @Published var ddaylist: [DDay] = []
     
     
