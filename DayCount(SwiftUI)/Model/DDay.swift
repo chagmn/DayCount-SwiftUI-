@@ -5,7 +5,7 @@
 //  Created by 창민 on 2021/05/24.
 //
 
-import Foundation
+import SwiftUI
 
 // 디데이 정보를 갖는 모델
 struct DDay {
