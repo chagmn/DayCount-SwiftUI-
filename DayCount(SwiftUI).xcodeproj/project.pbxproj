@@ -101,9 +101,9 @@
 		76A615C226577DA3006570B4 /* DayCount(SwiftUI) */ = {
 			isa = PBXGroup;
 			children = (
+				76A61654265B89FE006570B4 /* Model */,
 				76A61656265B8A14006570B4 /* View */,
 				76A61657265B8A18006570B4 /* ViewModel */,
-				76A61654265B89FE006570B4 /* Model */,
 				76A615C326577DA3006570B4 /* DayCount_SwiftUI_App.swift */,
 				76A615C726577DA6006570B4 /* Assets.xcassets */,
 				76A615CC26577DA6006570B4 /* Info.plist */,
