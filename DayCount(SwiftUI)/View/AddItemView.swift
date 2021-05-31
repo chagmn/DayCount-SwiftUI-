@@ -17,12 +17,11 @@ struct AddItemView: View {
     @State private var dateValue: Date = Date()
     
     @Binding var showAddItemView: Bool
-    
-    @ObservedObject var mainViewModel: MainViewModel = MainViewModel()
+    @EnvironmentObject var mainViewModel: MainViewModel
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY/MM/dd"
+        formatter.dateFormat = "YYYY년 MM월 dd일"
         return formatter
     }
     
@@ -40,9 +39,10 @@ struct AddItemView: View {
                 Toggle("오늘 기준", isOn: $isToggleOn)
                     .frame(width: 130, height: 40)
                 
-                DatePicker(selection: $dateValue, in: ...Date(), displayedComponents: .date){
-                    // Text("\(dateField, formatter: dateFormatter)")
+                DatePicker(selection: $dateValue, displayedComponents: .date){
+                  
                 }.labelsHidden()
+            
             }.padding(.bottom, 50)
             
             Button("추가하기", action: {
