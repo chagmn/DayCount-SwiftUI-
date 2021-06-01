@@ -8,7 +8,7 @@
 import SwiftUI
 
 // 디데이 정보를 갖는 모델
-struct DDay {
+struct DDay: Encodable, Decodable {
     var id: UUID = UUID()
     var title: String
     var date: String
