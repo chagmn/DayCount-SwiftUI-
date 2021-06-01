@@ -21,7 +21,7 @@ struct AddItemView: View {
     
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYY년 MM월 dd일"
+        formatter.dateFormat = "YYYY년 M월 d일"
         return formatter
     }
     
