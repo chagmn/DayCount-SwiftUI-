@@ -39,13 +39,17 @@ struct ddaylistView: View{
         VStack(alignment: .center, spacing: 10){
             
             ForEach(mainViewModel.ddaylist, id: \.id){ item in
-                ddayView(title: item.title, date: item.date, dday: item.calcDDay())
-//                ddayView(title: "test", date: "test", dday: "test")
+                if item.isFromToday {
+                    ddayView(title: item.title, date: item.date+"~", dday: item.calcDDay())
+                }
+                else{
+                    ddayView(title: item.title, date: "~"+item.date, dday: item.calcDDay())
+                }
+
             }
 
             Button(action: {
                 self.showAddItemView.toggle()
-//                mainViewModel.addDDay(title: "111", date: "222", isFromToday: false)
             }){
                 Image(systemName: "plus.circle")
                     .resizable()
@@ -63,18 +67,23 @@ struct ddayView: View{
     var dday: String
     
     var body: some View{
-        HStack(){
+        HStack(alignment: .center){
             Text(title)
+                .frame(width: UIScreen.main.bounds.width/2.2, alignment: .leading)
+                .padding()
 
-            VStack{
+            VStack(alignment: .trailing, spacing: 5){
                 Text(date)
                 Text(dday)
-            }.frame(width: 120, height: 50, alignment: .trailing)
+                    .font(.title)
+            }.frame(width: 120, alignment: .trailing)
+            .padding()
 
-
-        }.frame(width: UIScreen.main.bounds.width-20, height: 80)
-        .overlay(RoundedRectangle(cornerRadius: 20).stroke(Color.init(UIColor.systemGray2), lineWidth: 1))
-        .background(RoundedRectangle(cornerRadius: 20).fill( Color.init(UIColor.systemGray5)))
+        }.frame(width: UIScreen.main.bounds.width-20, height: 80, alignment: .leading)
+        .overlay(RoundedRectangle(cornerRadius: 20)
+                    .stroke(Color.init(UIColor.systemGray2), lineWidth: 1))
+        .background(RoundedRectangle(cornerRadius: 20)
+                        .fill( Color.init(UIColor.systemGray5)))
     }
 }
 
