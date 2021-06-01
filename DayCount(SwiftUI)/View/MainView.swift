@@ -23,6 +23,7 @@ struct MainView: View {
 
 struct ddaylistView: View{
     @State private var showAddItemView = false
+    @State private var showAlert = false
     @ObservedObject var mainViewModel = MainViewModel()
     
     var body: some View{
@@ -31,13 +32,40 @@ struct ddaylistView: View{
             ForEach(mainViewModel.ddaylist, id: \.id){ item in
                 if item.isFromToday {
                     ddayView(title: item.title, date: item.date+"~", dday: item.calcDDay())
+                        .gesture(DragGesture(minimumDistance: 100)
+                                    .onChanged{ value in
+                                        
+                                        self.showAlert.toggle()
+                                    })
+                        .alert(isPresented: $showAlert, content: {
+                            let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
+                                mainViewModel.deleteDDay(viewID: item.id)
+                            })
+                            let cancelButton = Alert.Button.destructive(Text("취소"))
+                            
+                            return Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
+                        })
+                    
                 }
                 else{
                     ddayView(title: item.title, date: "~"+item.date, dday: item.calcDDay())
+                        .gesture(DragGesture(minimumDistance: 100)
+                                    .onChanged{ value in
+                                        
+                                        self.showAlert.toggle()
+                                    })
+                        .alert(isPresented: $showAlert, content: {
+                            let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
+                                mainViewModel.deleteDDay(viewID: item.id)
+                            })
+                            let cancelButton = Alert.Button.destructive(Text("취소"))
+                            
+                            return Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
+                        })
+                    
+                    
                 }
-                
             }
-            
             
             Button(action: {
                 self.showAddItemView.toggle()
@@ -47,6 +75,7 @@ struct ddaylistView: View{
                     .frame(width: 25, height: 25)
             }.sheet(isPresented: $showAddItemView){
                 AddItemView(showAddItemView: self.$showAddItemView).environmentObject(mainViewModel)
+                
             }
         }
     }
