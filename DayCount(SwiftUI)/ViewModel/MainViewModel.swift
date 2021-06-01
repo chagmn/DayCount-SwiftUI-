@@ -15,7 +15,16 @@ class MainViewModel: ObservableObject, Identifiable {
             let encoder = JSONEncoder()
             if let encoded = try? encoder.encode(ddaylist){
                 UserDefaults.standard.set(encoded, forKey: "dday")
-                print("save")
+            }
+        }
+    }
+            
+    init() {
+        if let savedDDayData = UserDefaults.standard.data(forKey: "dday") {
+            let decoder = JSONDecoder()
+            if let loadedDDayData = try? decoder.decode([DDay].self, from: savedDDayData) {
+                self.ddaylist = loadedDDayData
+                return
             }
         }
     }
@@ -23,17 +32,14 @@ class MainViewModel: ObservableObject, Identifiable {
     func addDDay(title: String, date: String, isFromToday: Bool){
         ddaylist.append(DDay(title: title, date: date, isFromToday: isFromToday))
     }
+    
+    func deleteDDay(viewID: UUID){
+        let deleteButton = Alert.Button.cancel(Text("삭제"))
+        let cancelButton = Alert.Button.destructive(Text("취소"))
         
-    init() {
-        print("init")
-        if let savedDDayData = UserDefaults.standard.data(forKey: "dday") {
-            let decoder = JSONDecoder()
-            if let loadedDDayData = try? decoder.decode([DDay].self, from: savedDDayData) {
-                self.ddaylist = loadedDDayData
-                print("load")
-                return
-            }
+        Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
+        if let index = self.ddaylist.firstIndex(where: {$0.id == viewID}){
+            self.ddaylist.remove(at: index)
         }
-        
     }
 }
