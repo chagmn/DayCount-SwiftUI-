@@ -13,21 +13,11 @@ struct MainView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 10){
-            titleView()
-                .padding(.top, 10)
             ddaylistView()
+                .padding(.top, 30)
             Spacer()
         }
         .edgesIgnoringSafeArea(.bottom)
-    }
-    
-}
-
-struct titleView: View {
-    var body: some View{
-        VStack(alignment: .leading){
-            Text("DayCount").font(.system(size: 35))
-        }.padding(.trailing, 190)
     }
 }
 
@@ -45,9 +35,10 @@ struct ddaylistView: View{
                 else{
                     ddayView(title: item.title, date: "~"+item.date, dday: item.calcDDay())
                 }
-
+                
             }
-
+            
+            
             Button(action: {
                 self.showAddItemView.toggle()
             }){
@@ -67,18 +58,24 @@ struct ddayView: View{
     var dday: String
     
     var body: some View{
-        HStack(alignment: .center){
+        HStack(spacing: 0){
             Text(title)
-                .frame(width: UIScreen.main.bounds.width/2.2, alignment: .leading)
-                .padding()
-
+                .frame(width: UIScreen.main.bounds.width/2.5, alignment: .leading)
+                .padding(.leading)
+            
+            Spacer()
+            
             VStack(alignment: .trailing, spacing: 5){
                 Text(date)
+                    .frame(width: 150, alignment: .trailing)
+                
                 Text(dday)
                     .font(.title)
-            }.frame(width: 120, alignment: .trailing)
-            .padding()
-
+                
+            }.frame(width: UIScreen.main.bounds.width/2.5, alignment: .trailing)
+            .padding(.trailing)
+            
+            
         }.frame(width: UIScreen.main.bounds.width-20, height: 80, alignment: .leading)
         .overlay(RoundedRectangle(cornerRadius: 20)
                     .stroke(Color.init(UIColor.systemGray2), lineWidth: 1))
@@ -89,6 +86,8 @@ struct ddayView: View{
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        Group {
+            MainView()
+        }
     }
 }
