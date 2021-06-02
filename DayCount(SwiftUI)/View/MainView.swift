@@ -8,9 +8,7 @@
 import SwiftUI
 
 // 어플 실행시 처음 보여지는 뷰
-struct MainView: View {
-    @ObservedObject var mainViewModel: MainViewModel = MainViewModel()
-    
+struct MainView: View {  
     var body: some View {
         VStack(alignment: .center, spacing: 10){
             ddaylistView()
@@ -28,43 +26,22 @@ struct ddaylistView: View{
     
     var body: some View{
         VStack(alignment: .center, spacing: 10){
-            
             ForEach(mainViewModel.ddaylist, id: \.id){ item in
-                if item.isFromToday {
-                    ddayView(title: item.title, date: item.date+"~", dday: item.calcDDay())
-                        .gesture(DragGesture(minimumDistance: 100)
-                                    .onChanged{ value in
-                                        
-                                        self.showAlert.toggle()
-                                    })
-                        .alert(isPresented: $showAlert, content: {
-                            let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
-                                mainViewModel.deleteDDay(viewID: item.id)
-                            })
-                            let cancelButton = Alert.Button.destructive(Text("취소"))
-                            
-                            return Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
+                ddayView(title: item.title, date: item.date, dday: item.calcDDay())
+                    .gesture(DragGesture(minimumDistance: 100)
+                                .onChanged{ value in
+                                    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                                    impactMed.impactOccurred()
+                                    self.showAlert.toggle()
+                                })
+                    .alert(isPresented: $showAlert, content: {
+                        let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
+                            mainViewModel.deleteDDay(viewID: item.id, title: item.title)
                         })
-                    
-                }
-                else{
-                    ddayView(title: item.title, date: "~"+item.date, dday: item.calcDDay())
-                        .gesture(DragGesture(minimumDistance: 100)
-                                    .onChanged{ value in
-                                        
-                                        self.showAlert.toggle()
-                                    })
-                        .alert(isPresented: $showAlert, content: {
-                            let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
-                                mainViewModel.deleteDDay(viewID: item.id)
-                            })
-                            let cancelButton = Alert.Button.destructive(Text("취소"))
-                            
-                            return Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
-                        })
-                    
-                    
-                }
+                        let cancelButton = Alert.Button.destructive(Text("취소"))
+                        
+                        return Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
+                    })
             }
             
             Button(action: {
