@@ -33,12 +33,8 @@ class MainViewModel: ObservableObject, Identifiable {
         ddaylist.append(DDay(title: title, date: date, isFromToday: isFromToday))
     }
     
-    func deleteDDay(viewID: UUID){
-        let deleteButton = Alert.Button.cancel(Text("삭제"))
-        let cancelButton = Alert.Button.destructive(Text("취소"))
-        
-        Alert(title: Text("디데이 삭제"), message: Text("해당 디데이를 제거하시겠습니까?"), primaryButton: deleteButton, secondaryButton: cancelButton)
-        if let index = self.ddaylist.firstIndex(where: {$0.id == viewID}){
+    func deleteDDay(deleteID: UUID){
+        if let index = ddaylist.firstIndex(where: {$0.id == deleteID}){
             self.ddaylist.remove(at: index)
         }
     }
