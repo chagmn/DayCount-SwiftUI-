@@ -21,7 +21,8 @@ struct MainView: View {
 
 struct ddaylistView: View{
     @State private var showAddItemView = false
-    @State private var showAlert = false
+    @State private var showAlert: Bool = false
+    @State private var deleteID: UUID?
     @ObservedObject var mainViewModel = MainViewModel()
     
     var body: some View{
@@ -32,11 +33,12 @@ struct ddaylistView: View{
                                 .onChanged{ value in
                                     let impactMed = UIImpactFeedbackGenerator(style: .medium)
                                     impactMed.impactOccurred()
+                                    self.deleteID = item.id
                                     self.showAlert.toggle()
                                 })
                     .alert(isPresented: $showAlert, content: {
                         let deleteButton = Alert.Button.cancel(Text("삭제"), action: {
-                            mainViewModel.deleteDDay(viewID: item.id, title: item.title)
+                            mainViewModel.deleteDDay(deleteID: deleteID!)
                         })
                         let cancelButton = Alert.Button.destructive(Text("취소"))
                         
