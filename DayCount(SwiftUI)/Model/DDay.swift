@@ -22,11 +22,11 @@ struct DDay: Encodable, Decodable {
     
     func calcDDay() -> String{
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        dateFormatter.dateFormat = "yyyy년 M월 d일"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC") as TimeZone?
         let todayDate: Date = dateFormatter.date(from: dateFormatter.string(from: Date()))!
-        let ddayDate: Date = dateFormatter.date(from: date)!
+        let ddayDate: Date = dateFormatter.date(from: date.components(separatedBy: "~").map{String($0)}.joined())!
         
         var interval: TimeInterval
         
