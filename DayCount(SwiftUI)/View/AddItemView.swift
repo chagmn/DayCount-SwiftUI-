@@ -12,7 +12,7 @@ import Combine
 struct AddItemView: View {
     @State private var title: String = ""
     @State private var date: String = ""
-    @State private var isToggleOn: Bool = true
+    @State private var isToggleOn: Bool = false
     @State private var isClickedAddButton: Bool = false
     @State private var dateValue: Date = Date()
     
@@ -39,24 +39,32 @@ struct AddItemView: View {
                 Toggle("오늘 기준", isOn: $isToggleOn)
                     .frame(width: 130, height: 40)
                 
-                DatePicker(selection: $dateValue, displayedComponents: .date){
-                  
-                }.labelsHidden()
-            
+                if isToggleOn{
+                    DatePicker(selection: $dateValue, in: Date()...Date(), displayedComponents: .date){
+                    }.labelsHidden()
+
+                } else {
+                    DatePicker(selection: $dateValue, displayedComponents: .date){
+                    }.labelsHidden()
+                }
+                
             }.padding(.bottom, 50)
             
-            Button("추가하기", action: {
-                addButtonDidTap()
+            Button("추가하기", action:{
+                if title != ""{
+                    if isToggleOn {
+                        date = dateFormatter.string(from: dateValue)+"~"
+                    }else{
+                        date = "~"+dateFormatter.string(from: dateValue)
+                    }
+                    self.mainViewModel.addDDay(title: title, date: date, isFromToday: isToggleOn)
+                    self.showAddItemView = false
+                }
             }).frame(width: 160, height: 35, alignment: .center)
             .background(Color(UIColor.systemBlue))
             .foregroundColor(.white)
             .cornerRadius(10)
         }
-    }
-    
-    func addButtonDidTap(){
-        self.mainViewModel.addDDay(title: title, date: dateFormatter.string(from: dateValue), isFromToday: isToggleOn)
-        self.showAddItemView = false
     }
 }
 
