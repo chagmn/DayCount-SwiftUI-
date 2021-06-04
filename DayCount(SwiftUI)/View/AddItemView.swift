@@ -27,7 +27,9 @@ struct AddItemView: View {
     
     var body: some View {
         VStack(alignment: .center){
-            TextField("디데이 제목", text: $title)
+            TextField("디데이 제목", text: $title){
+                self.hideKeyboard()
+            }
                 .multilineTextAlignment(.center)
                 .foregroundColor(.black)
                 .frame(width: 320, height: 40)
@@ -65,11 +67,24 @@ struct AddItemView: View {
             .foregroundColor(.white)
             .cornerRadius(10)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            self.hideKeyboard()
+        }
+     
     }
 }
 
 struct AddItemView_Previews: PreviewProvider {
     static var previews: some View {
         AddItemView(showAddItemView: .constant(true))
+    }
+}
+
+extension View {
+    func hideKeyboard() {
+        let resign = #selector(UIResponder.resignFirstResponder)
+        UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
     }
 }
